@@ -6,6 +6,8 @@ export type AuditCategory =
   | "Duplicate Billing"
   | "Unbundled Supply Fee";
 
+export type VerificationStatus = "confirmed" | "adjusted" | "disputed";
+
 export interface DecodedLine {
   /** The raw scanned jargon, CPT, or HCPCS code as it appeared on the bill. */
   code: string;
@@ -23,13 +25,27 @@ export interface Discrepancy {
   category: AuditCategory;
   /** What the hospital charged for this item. */
   chargedAmount: number;
-  /** Fair-market benchmark range, low and high bound. */
+  /** Model-estimated fair-market benchmark range, low and high bound. */
   benchmarkLow: number;
   benchmarkHigh: number;
-  /** Regional database alignment confidence, 0–100. */
+  /** The model's own confidence in this estimate, 0–100 (not a live database lookup). */
   confidence: number;
   /** 1–2 sentence, compliant rationale for the flag. */
   rationale: string;
+  /** The exact line item(s) from the bill that triggered this flag. */
+  evidence: string;
+  /** Whether the benchmark came from a curated reference anchor or the model's own estimate. */
+  grounding: "reference-table" | "model-estimate";
+  /** How strong/costly the issue is. */
+  severity: "high" | "medium" | "low";
+  /**
+   * Verdict from the independent second-pass verifier, merged in server-side.
+   * Absent if the verifier did not run (e.g. it failed and we fell back).
+   */
+  verification?: {
+    status: VerificationStatus;
+    critique: string;
+  };
 }
 
 export interface RoadmapStep {
@@ -55,6 +71,26 @@ export interface Safety {
   sovereigntyNotice: string;
 }
 
+export type OutputLanguage = "en" | "es";
+export type ReadingLevel = "standard" | "simple";
+
+export interface Household {
+  size: number;
+  income: number;
+}
+
+/** Estimated hospital financial-assistance (charity-care) eligibility. */
+export interface CharityCare {
+  /** True only when the patient supplied household details. */
+  assessed: boolean;
+  eligibilityLikelihood: "likely" | "possible" | "unlikely" | "unknown";
+  /** Income as a percent of the federal poverty level (0 when not assessed). */
+  estimatedFplPercent: number;
+  explanation: string;
+  /** A ready-to-say request for the hospital's financial-assistance application. */
+  requestLanguage: string;
+}
+
 export interface AuditResult {
   overview: Overview;
   decodedLines: DecodedLine[];
@@ -63,11 +99,31 @@ export interface AuditResult {
   phoneScript: string[];
   roadmap: RoadmapStep[];
   safety: Safety;
+  charityCare: CharityCare;
+  /** A concise, plain-language trace of how the audit reasoned. */
+  reasoning: string;
+}
+
+/** One verdict from the independent second-pass verifier. */
+export interface VerificationVerdict {
+  /** Index into the first-pass discrepancies array. */
+  index: number;
+  verdict: VerificationStatus;
+  /** Re-calibrated confidence after the skeptical re-check, 0–100. */
+  calibratedConfidence: number;
+  critique: string;
+}
+
+export interface VerifierResult {
+  verdicts: VerificationVerdict[];
 }
 
 export interface AuditRequestBody {
   region: string;
   ocrText: string;
+  language?: OutputLanguage;
+  readingLevel?: ReadingLevel;
+  household?: Household | null;
 }
 
 /** A user-supplied bill page sent to the vision extractor. */
@@ -82,7 +138,7 @@ export interface ExtractRequestBody {
   documents: DocPart[];
 }
 
-/** Result of the Claude vision pass that reads a bill image/PDF. */
+/** Result of the Gemini vision pass that reads a bill image/PDF. */
 export interface ExtractionResult {
   /** Faithful, PII-masked transcription of the itemized statement. */
   statementText: string;
