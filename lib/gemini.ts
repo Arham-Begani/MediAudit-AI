@@ -3,11 +3,30 @@ import {
   GoogleGenAI,
   HarmBlockThreshold,
   HarmCategory,
+  ThinkingLevel,
   type SafetySetting,
 } from "@google/genai";
 
-/** Strongest Gemini model by default; override with GEMINI_MODEL if desired. */
-export const GEMINI_MODEL = process.env.GEMINI_MODEL?.trim() || "gemini-2.5-pro";
+/** Fast Gemini model by default; override with GEMINI_MODEL if desired. */
+export const GEMINI_MODEL =
+  process.env.GEMINI_MODEL?.trim() || "gemini-3-flash-preview";
+
+/**
+ * Thinking depth for the Gemini 3 calls. LOW keeps latency well under the
+ * route's 120s budget while preserving enough reasoning for the audit. Gemini 3
+ * uses `thinkingLevel` (not the legacy `thinkingBudget`). Override with
+ * GEMINI_THINKING_LEVEL (MINIMAL | LOW | MEDIUM | HIGH).
+ */
+const THINKING_LEVELS: Record<string, ThinkingLevel> = {
+  MINIMAL: ThinkingLevel.MINIMAL,
+  LOW: ThinkingLevel.LOW,
+  MEDIUM: ThinkingLevel.MEDIUM,
+  HIGH: ThinkingLevel.HIGH,
+};
+export const THINKING_LEVEL: ThinkingLevel =
+  THINKING_LEVELS[
+    (process.env.GEMINI_THINKING_LEVEL ?? "").trim().toUpperCase()
+  ] ?? ThinkingLevel.LOW;
 
 export function getGeminiKey(): string {
   return (process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "").trim();
