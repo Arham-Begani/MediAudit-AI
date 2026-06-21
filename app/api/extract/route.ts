@@ -6,6 +6,7 @@ import {
   makeClient,
   mapGeminiError,
   SAFETY_SETTINGS,
+  THINKING_LEVEL,
 } from "@/lib/gemini";
 import {
   buildExtractionPrompt,
@@ -16,7 +17,7 @@ import type { ExtractRequestBody, ExtractionResult, DocPart } from "@/lib/types"
 export const runtime = "nodejs";
 export const maxDuration = 120;
 
-const MAX_DOCS = 8;
+const MAX_DOCS = 30;
 const ALLOWED_IMAGE = new Set([
   "image/jpeg",
   "image/png",
@@ -86,7 +87,7 @@ export async function POST(req: Request) {
         responseSchema: EXTRACTION_JSON_SCHEMA,
         temperature: 0.2,
         maxOutputTokens: 12000,
-        thinkingConfig: { thinkingBudget: -1 },
+        thinkingConfig: { thinkingLevel: THINKING_LEVEL },
         safetySettings: SAFETY_SETTINGS,
       },
     });
