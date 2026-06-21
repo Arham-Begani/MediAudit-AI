@@ -31,3 +31,10 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# local AI tooling / one-off dev artifacts (keep out of the submitted repo)
+.mcp.json
+opencode.json
+.forze/
+add-dark-theme.js
+.opencode/
