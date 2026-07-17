@@ -2,7 +2,7 @@
   "name": "mediaudit-ai",
   "version": "1.0.0",
   "private": true,
-  "description": "MediAudit AI — a Crisis-to-Action Translator that decodes medical bills, audits them for institutional errors, and builds a patient advocacy packet.",
+  "description": "MediAudit AI: a Crisis-to-Action Translator that decodes medical bills, audits them for institutional errors, and builds a patient advocacy packet.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

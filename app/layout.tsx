@@ -27,6 +27,20 @@ export const metadata: Metadata = {
   title: "MediAudit AI — Decode & dispute your medical bill",
   description:
     "A calm advocate that decodes cryptic medical billing codes, audits them for institutional errors, and hands you a ready-to-use action packet — in plain English.",
+  openGraph: {
+    images: [
+      {
+        url: "/thumbnail.jpg",
+        width: 1200,
+        height: 675,
+        alt: "MediAudit AI — Decode & dispute your medical bill",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/thumbnail.jpg"],
+  },
 };
 
 export const viewport: Viewport = {
