@@ -27,7 +27,7 @@ import {
   UploadIcon,
 } from "./components/icons";
 import { ThemeToggle } from "./components/ThemeToggle";
-import { SAMPLE_BILL, SAMPLE_REGION } from "@/lib/sample";
+import { ONCOLOGY_SAMPLE_BILL, ONCOLOGY_SAMPLE_REGION, SAMPLE_BILL, SAMPLE_REGION } from "@/lib/sample";
 import type {
   AuditResult,
   Discrepancy,
@@ -592,15 +592,15 @@ export default function Home() {
     setFiles((prev) => prev.filter((f) => f.id !== id));
   }
 
-  async function runSample() {
+  async function runSample(bill = SAMPLE_BILL, region = SAMPLE_REGION) {
     if (busy) return;
     setError(null);
     setResult(null);
     setFiles([]);
     setExtraction(null);
-    setRegion(SAMPLE_REGION);
+    setRegion(region);
     setPhase("loading");
-    await doAudit(SAMPLE_BILL, SAMPLE_REGION);
+    await doAudit(bill, region);
   }
 
   function reset() {
@@ -769,10 +769,17 @@ export default function Home() {
           <div className="hero-cta">
             <button
               className="btn btn-primary btn-arrow"
-              onClick={runSample}
+              onClick={() => runSample()}
               disabled={busy}
             >
               Try a sample bill <ArrowRight />
+            </button>
+            <button
+              className="btn btn-ghost"
+              onClick={() => runSample(ONCOLOGY_SAMPLE_BILL, ONCOLOGY_SAMPLE_REGION)}
+              disabled={busy}
+            >
+              Try an oncology bill
             </button>
             <a className="btn btn-ghost" href="#how">
               How it works

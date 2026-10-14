@@ -36,3 +36,27 @@ LINE  CODE        DESCRIPTION                              CHARGE
 
 ESTIMATED PATIENT RESPONSIBILITY AFTER ADJUSTMENTS: 7,811.00
 *** THIS IS NOT A BILL FROM YOUR INSURANCE CARRIER ***`;
+
+// Fictional outpatient oncology statement for demonstrating billing questions.
+// The entries are illustrative, not evidence that any real provider billed incorrectly.
+export const ONCOLOGY_SAMPLE_REGION = "California";
+export const ONCOLOGY_SAMPLE_BILL = `FICTIONAL SAMPLE — NOT A REAL PATIENT BILL
+WEST BAY CANCER CENTER — OUTPATIENT INFUSION STATEMENT
+PATIENT: [MASKED]   DOB: [MASKED]   ACCOUNT: [MASKED]
+SERVICE DATE: 10/14/2026   STATE: CALIFORNIA
+
+LINE  CODE    DESCRIPTION                              CHARGE
+001   85025   COMPLETE BLOOD COUNT WITH DIFFERENTIAL      165.00
+002   80053   COMPREHENSIVE METABOLIC PANEL               190.00
+003   96413   CHEMOTHERAPY INFUSION, FIRST HOUR           890.00
+004   J2405   ANTI-NAUSEA MEDICATION, PER 1 MG UNIT       260.00
+005   J7030   NORMAL SALINE, 1 LITER                       92.00
+006   SUPPLY  NON-STERILE GLOVES AND BASIC IV KIT          74.00
+007   FAC     OUTPATIENT INFUSION FACILITY CHARGE         740.00
+
+INSURANCE ADJUSTMENT: -1,230.00
+ESTIMATED PATIENT RESPONSIBILITY: 1,181.00
+
+This synthetic example is for demonstrating plain-language billing review.
+Only the care team can advise on treatment. Charges and coverage require
+confirmation with the provider and insurer.`;

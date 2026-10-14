@@ -62,6 +62,8 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser. You can click **"Try a sample bill"** to see it in action or upload your own statement, pick a state, and run the audit.
 
+The **"Try an oncology bill"** button uses a fictional, masked outpatient infusion statement to demonstrate how a patient or caregiver can prepare billing questions. This was added for CodeTheCure in October 2026; the underlying MediAudit AI project predates the event. The tool does not assess whether cancer treatment is medically necessary, verify drug doses or insurance coverage, or replace clinical or billing professionals.
+
 > [!NOTE]
 > The audit runs Gemini 3 Flash at a low thinking level, so a full analysis typically takes 10 to 30 seconds. The request runs server-side with a 120-second `maxDuration` threshold, and the browser aborts after 115 seconds as a safety net.
 
