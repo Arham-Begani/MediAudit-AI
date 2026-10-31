@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { finalizeAudit } from "@/lib/audit-integrity";
 import {
   GEMINI_MODEL,
   getGeminiKey,
@@ -196,7 +197,7 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json(parsed);
+    return NextResponse.json(finalizeAudit(parsed, today, language));
   } catch (err) {
     const { message, status } = mapGeminiError(err);
     return jsonError(message, status);
