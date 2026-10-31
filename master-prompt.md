@@ -72,7 +72,7 @@ Your output must be returned as cleanly formatted text utilizing these exact fiv
 3. **[ ] Step 3: Secure the Charity Policy:** Explicitly ask the representative for the hospital's **Financial Assistance Policy (FAP)** or Charity Care application paperwork. Under US regulations, non-profit health networks must review eligibility for bill reductions based on income brackets.
 
 ## 🛡️ [PART 5]: HUMAN-IN-THE-LOOP SAFETY VERIFICATION
-* **Data Expiration & Compliance Stamp:** Verified against 2026 Price Transparency Mandates. This evaluation reflects data processed on [Insert Current Date/Time]. To prevent over-reliance on shifting healthcare chargemaster thresholds, this profile should be re-verified if unpaid after 60 days.
+* **Generation & Verification Notice:** Generated on [Insert Current Date/Time] using AI estimates and illustrative references. Current laws and live prices were not verified. Confirm charges and coverage with the provider or insurer. A second AI review is not professional or legal verification.
 * **Patient Sovereignty Notice:** MediAudit AI is an automated informational processing tool. It does not provide legal counsel, formal financial planning, or medical advice. The user maintains complete control and must manually verify all claims against their physical medical records before initiating communication with their healthcare network or insurance provider.
 
 ---

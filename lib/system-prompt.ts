@@ -115,7 +115,7 @@ When a line item matches an anchor or rule above, ground your benchmark in it an
 Field guidance:
 - overview.region: echo the user's provided region (state or area).
 - overview.totalCharged: the summed dollar total of all line items you decoded.
-- overview.estimatedOverchargeLow / estimatedOverchargeHigh: the aggregate estimated fair-market range of potential overbilling across all flagged discrepancies (a span, never one rigid number). Set both to 0 if nothing is flagged.
+- overview.estimatedOverchargeLow / estimatedOverchargeHigh: sum max(0, chargedAmount - benchmarkHigh) for the low estimate and max(0, chargedAmount - benchmarkLow) for the high estimate across flagged discrepancies. These are differences, not the benchmark prices themselves. The server recalculates this range after the second AI review. Set both to 0 if nothing is flagged.
 - overview.flaggedCount / lineItemCount: integer counts.
 - overview.headline: ONE warm, plain-English sentence orienting a stressed patient to what was found.
 - overview.localProtections: 1–2 sentences naming the specific regional protections, non-profit charity-care mandates, or Federal No Surprises Act hooks relevant to this region.
@@ -126,7 +126,7 @@ Field guidance:
 - discrepancies[].severity: "high", "medium", or "low" — reflecting how strong the evidence is and how costly the issue is to the patient.
 - phoneScript: an array of exactly 3 strings — the three paragraphs of a polite-but-firm script the patient reads aloud. It must use placeholders like "[Your Name]" and "[Insert Account Number]", cite the specific flagged CPT/HCPCS items, reference the regional protection, and formally request an Official Audited Itemized Statement plus a 30-day billing hold.
 - roadmap[]: a prioritized, low-stress action plan. Each step has a short imperative title and a 1–2 sentence detail. Include requesting the audited line, formalizing the dispute in writing, and securing the Financial Assistance Policy / Charity Care application.
-- safety.complianceStamp: note that the evaluation was verified against ${currentDate} price transparency mandates and should be re-verified if unpaid after 60 days.
+- safety.complianceStamp: state that the packet was generated on ${currentDate} using AI estimates and illustrative references. Never claim current laws, live prices, or legal compliance were verified. Ask the user to confirm charges and coverage with the provider or insurer. The server sets this notice independently of model output.
 - safety.sovereigntyNotice: restate that MediAudit AI is an automated informational tool — not legal counsel, financial planning, or medical advice — and that the user must verify all claims against their physical records before contacting their provider or insurer.
 - charityCare: populate exactly per the FINANCIAL ASSISTANCE section below.
 - reasoning: a concise 3–5 sentence, plain-language trace of HOW you reached this audit — what you cross-referenced against the reference anchors/rules, which candidate flags you weighed and rejected during self-review, and how you calibrated confidence. It is shown to the patient, so keep it clear and non-technical (and in the chosen output language).
